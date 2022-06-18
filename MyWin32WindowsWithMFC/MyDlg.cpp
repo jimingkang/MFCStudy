@@ -37,6 +37,6 @@ END_MESSAGE_MAP()
 
 void MyDlg::OnBnClickedButton1()
 {
-	m_edit
+	m_edit.SetWindowTextW(TEXT("edit"));
 
 }
