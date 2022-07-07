@@ -47,7 +47,15 @@ MyWin32MFCWindows::MyWin32MFCWindows() {
 	but = new CButton();
 	CRect r(50, 100, 100, 150);
 	but->Create(TEXT("btn"), WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, r, this, 1002);
-     root = new TreeNode<int>(1,700,100);
+
+	TreeNode<int>* lleft = new TreeNode<int>(4);
+	TreeNode<int>* lright = new TreeNode<int>(5);
+	TreeNode<int> * left=new TreeNode<int>(2);
+	TreeNode<int>* right = new TreeNode<int>(3);
+     root = new TreeNode<int>(1,left,right,700,100);
+	 left->setLeft(lleft);
+	 left->setRight(lright);
+	
 
 }
 
@@ -69,8 +77,8 @@ void MyWin32MFCWindows::OnPaint()
 //在鼠标处画图
 	//CPoint curPos;
 	//GetCursorPos(&curPos);
-
-	root->print(&dc);
+	root->PreOrder(root, &dc);
+	//root->print(&dc);
 }
 
 
