@@ -54,6 +54,14 @@ public:
 	}
 	void print(CPaintDC* pDC, TreeNode* root) {
 		//std::string s = std::to_string(value);
+	//	CPen NewPen;
+	//	NewPen.CreatePen(PS_SOLID, 6, RGB(255, 0, 0));
+	//	CPen* oldPen = pDC->SelectObject(&NewPen);
+		
+
+		COLORREF newtextcolour = COLORREF RGB(255, 0, 0);
+		pDC->SetTextColor(newtextcolour);
+
 		CString a;
 		a.Format(_T("%d"), root->value);
 		//»­Ô²
@@ -62,25 +70,28 @@ public:
 		//pDC->Ellipse(CRect(point1, point2));
 
 		pDC->TextOut(root->x - 3, root->y - 10, a);
+	//	pDC->SelectObject(&oldPen);
 		if (root != NULL && root->left != NULL) {
 			CPoint startp(root->x, root->y);
 			pDC->MoveTo(startp);
 			CPoint endp(root->x - 20, root->y + 20);
 			pDC->LineTo(endp);
 		}
+		Sleep(1000);
 		if (root != NULL && root->right != NULL) {
 		CPoint startp2(root->x, root->y);
 		pDC->MoveTo(startp2);
 		CPoint endp2(root->x + 20, root->y + 20);
 		pDC->LineTo(endp2);
 	}
+		
 		Sleep(1000);
 	}
 	void PreOrder(TreeNode* root, CPaintDC* pDC) {
 		print(pDC, root);
 		if(root!=NULL&&root->left!=NULL)
 		PreOrder(root->left, pDC);
-		print(pDC, root);
+	
 		if (root != NULL && root->right != NULL)
 		PreOrder(root->right, pDC);
 	}
