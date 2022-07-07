@@ -24,6 +24,9 @@
     <ClInclude Include="MyDlg.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="MyTreeNode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MyWin32MFC.cpp">

@@ -25,4 +25,5 @@ protected:
 public:
 	afx_msg void OnBnClickedButton1();
 	CEdit m_edit;
+	afx_msg void OnPaint();
 };

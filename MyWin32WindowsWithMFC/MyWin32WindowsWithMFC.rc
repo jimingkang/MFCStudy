@@ -13,7 +13,7 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// English (United States) resources
+// 英语(美国) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
 LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
@@ -56,7 +56,7 @@ CAPTION "Dialog"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
     PUSHBUTTON      "Button1",IDC_BUTTON1,15,16,50,14
-    EDITTEXT        IDC_EDIT1,85,16,40,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT1,17,35,40,14,ES_AUTOHSCROLL
 END
 
 
@@ -89,7 +89,7 @@ BEGIN
     0
 END
 
-#endif    // English (United States) resources
+#endif    // 英语(美国) resources
 /////////////////////////////////////////////////////////////////////////////
 
 

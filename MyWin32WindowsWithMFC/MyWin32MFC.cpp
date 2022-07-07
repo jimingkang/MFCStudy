@@ -1,20 +1,24 @@
 ﻿#include "MyWin32MFC.h"
 #include "MyDlg.h"
+#include "MyTreeNode.h"
 #include <afxwin.h>
 class MyWin32MFCWindows : public CFrameWnd
 {
 public:
+	TreeNode<int>* root;
 	MyDlg* dlg;
 	CButton* but;
 	MyWin32MFCWindows();
 	afx_msg void OnButton();
+	afx_msg void OnPaint();
 	DECLARE_MESSAGE_MAP()
 
 };
 BEGIN_MESSAGE_MAP(MyWin32MFCWindows, CFrameWnd)
 	ON_BN_CLICKED(1002, OnButton)
+	ON_WM_PAINT(OnPaint)
 	END_MESSAGE_MAP()
-class MyWin32MFC : public CWinApp
+class MyWin32MFC : public CWinApp,CStatic
 {
 public:
 
@@ -41,17 +45,32 @@ MyWin32MFCWindows::MyWin32MFCWindows() {
 
 	//第二种是用MFC的CButton产生按钮，并保存于MyWin32MFCWindows指针变量but中
 	but = new CButton();
-	CRect r(200, 300, 400, 450);
+	CRect r(50, 100, 100, 150);
 	but->Create(TEXT("btn"), WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, r, this, 1002);
+     root = new TreeNode<int>(1,700,100);
 
 }
 
 void MyWin32MFCWindows::OnButton() {
 
 	//::MessageBoxW(NULL,TEXT("hello"), TEXT("hello"), MB_OK);
-	dlg=new MyDlg();
-	dlg->DoModal();
+	//dlg=new MyDlg();
+	//dlg->DoModal();
 	//::DialogBoxParam(AfxGetInstanceHandle(), LPCTSTR(IDD_DIALOG1), NULL, NULL, NULL);
+
+}
+
+void MyWin32MFCWindows::OnPaint()
+{
+	CPaintDC dc(this); // device context for painting
+					   // TODO: 在此处添加消息处理程序代码
+					   // 不为绘图消息调用 CDialog::OnPaint()
+
+//在鼠标处画图
+	//CPoint curPos;
+	//GetCursorPos(&curPos);
+
+	root->print(&dc);
 }
 
 
