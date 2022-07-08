@@ -6,6 +6,7 @@ class MyWin32MFCWindows : public CFrameWnd
 {
 public:
 	TreeNode<int>* root;
+	CPaintDC *pdc;
 	MyDlg* dlg;
 	CButton* but;
 	MyWin32MFCWindows();
@@ -48,13 +49,24 @@ MyWin32MFCWindows::MyWin32MFCWindows() {
 	CRect r(50, 100, 100, 150);
 	but->Create(TEXT("btn"), WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, r, this, 1002);
 
-	TreeNode<int>* lleft = new TreeNode<int>(4);
-	TreeNode<int>* lright = new TreeNode<int>(5);
-	TreeNode<int> * left=new TreeNode<int>(2);
-	TreeNode<int>* right = new TreeNode<int>(3);
-     root = new TreeNode<int>(1,left,right,700,100);
-	 left->setLeft(lleft);
-	 left->setRight(lright);
+	
+	TreeNode<int> * left=new TreeNode<int>(1);
+	TreeNode<int>* right = new TreeNode<int>(6);
+     root = new TreeNode<int>(4,left,right,700,100);
+
+	 TreeNode<int>* rleft = new TreeNode<int>(5);
+	 TreeNode<int>* rright = new TreeNode<int>(7);
+	 right->setLeft(rleft);
+	 right->setRight(rright);
+	 TreeNode<int>* right8 = new TreeNode<int>(8);
+		 rright->setRight(right8);
+	 TreeNode<int>*left0 = new TreeNode<int>(0);
+	 TreeNode<int>* right2 = new TreeNode<int>(2);
+	 left->setLeft(left0);
+	 left->setRight(right2);
+
+	 TreeNode<int>* right3 = new TreeNode<int>(3);
+	 right2->setRight(right3);
 	
 
 }
@@ -65,6 +77,11 @@ void MyWin32MFCWindows::OnButton() {
 	//dlg=new MyDlg();
 	//dlg->DoModal();
 	//::DialogBoxParam(AfxGetInstanceHandle(), LPCTSTR(IDD_DIALOG1), NULL, NULL, NULL);
+	
+	//root->btstoGst(root,pdc);
+	//root->btstoGst(root);
+	//root->x = 1000;
+	//root->PreOrder(root, pdc);
 
 }
 
@@ -73,11 +90,13 @@ void MyWin32MFCWindows::OnPaint()
 	CPaintDC dc(this); // device context for painting
 					   // TODO: 在此处添加消息处理程序代码
 					   // 不为绘图消息调用 CDialog::OnPaint()
-
+	 pdc = &dc; 
 //在鼠标处画图
 	//CPoint curPos;
 	//GetCursorPos(&curPos);
-	root->PreOrder(root, &dc);
+	//root->PreOrder(root, &dc);
+	// 
+ root->btstoGst3(root,&dc);
 	//root->print(&dc);
 }
 
