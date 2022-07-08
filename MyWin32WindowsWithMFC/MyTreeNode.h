@@ -145,12 +145,6 @@ public:
 		static int preval = 0;
 		if (root == NULL)
 			return NULL;
-		/*if (root != NULL && root->right == NULL && root->left == NULL)
-		{
-			return root;
-
-		}*/
-
 
 		
 			TreeNode* right = btstoGst3(root->right, pDC);
