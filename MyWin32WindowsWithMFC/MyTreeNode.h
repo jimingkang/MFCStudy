@@ -193,12 +193,137 @@ public:
 			TreeNode* left = insertBSTNode(root->left, p, pDC); //在这里返回新节点8
 			root->setLeft(left); //从下往上返回,关联8 这个例题中,设置9的节点8，因为8在9的左节点
 		}
-		
-		
+	
+		return root;   //从下往上返回9 7 6 4
+	}
+	//leetcode450 deleteBSTNode
+	TreeNode* deleteBSTNode(TreeNode* root, int p, CPaintDC* pDC) {
+		if (root == NULL)
+			return NULL;
+	
+		if (root != NULL && (root->value < p))
+		{
+			TreeNode* right = deleteBSTNode(root->right, p, pDC); //
+			root->setRight(right);        //从下往上返回，,重新设置right节点
+		}
+		else 	if (root != NULL && (root->value > p))
+		{
+			TreeNode* left = deleteBSTNode(root->left, p, pDC); //
+			root->setLeft(left); //从下往上返回,关联0 
+		}
+		else	if (root != NULL && (root->value == p))
+		{
+			TreeNode* refreshNode = resetSubNode(root); //在这里返回新节点0
+			return refreshNode;
+		}
+
+
 		//print(pDC, root);
 		return root;   //从下往上返回9 7 6 4
 	}
 
+	//前置节点0
+	TreeNode* resetSubNode(TreeNode* root) {
+		if (root->right == NULL && root->left == NULL)
+			return NULL;
+		if (root->right == NULL && root->left != NULL)
+		{
+			return root->left;
+		}
+		if (root->left == NULL && root->right != NULL)
+		{
+			return root->right;
+		}
+
+		if (root->left != NULL && root->right != NULL)
+		{
+			if (root->left->right != NULL)
+			{
+				TreeNode* node = root->left->right;
+				TreeNode* preNode = root->left;
+			
+				while(node->right!=NULL)
+				{
+					node = node->right;
+				}
+				//前置节点的左节点不为空，
+				if (node->left != NULL) {
+					preNode->right = node->left;
+					node->left = root->left;
+					node->right = root->right;
+					return  node;
+				}
+				else {
+					preNode->right = NULL;
+					node->left = root->left;
+					node->right = root->right;
+					return  node;
+				}
+			}
+			else {
+				//如果前置节点就是该节点的左节点，直接用该左节点作为根节点
+				root->left->right = root->right;
+				TreeNode<int>* newNode = root->left;
+				root = NULL;
+				return  newNode;
+			}
+
+				
+		}
+		return root;
+	}
+
+	//前置节点2
+	TreeNode* resetSubNode2(TreeNode* root) {
+		if (root->right == NULL && root->left == NULL)
+			return NULL;
+		if (root->right == NULL && root->left != NULL)
+		{
+			return root->left;
+		}
+		if (root->left == NULL && root->right != NULL)
+		{
+			return root->right;
+		}
+
+		if (root->left != NULL && root->right != NULL)
+		{
+			if (root->left->right != NULL)
+			{
+				TreeNode* node = root->left->right;
+				TreeNode* preNode = root->left;
+
+				while (node->right != NULL)
+				{
+					preNode = node;
+					node = node->right;
+				}
+				//前置节点的左节点不为空，
+				if (node->left != NULL) {
+					preNode->right = node->left;
+					node->left = root->left;
+					node->right = root->right;
+					return  node;
+				}
+				else {
+					preNode->right = NULL;
+					node->left = root->left;
+					node->right = root->right;
+					return  node;
+				}
+			}
+			else {
+				//如果前置节点就是该节点的左节点，直接用该左节点作为根节点
+				root->left->right = root->right;
+				TreeNode<int>* newNode = root->left;
+				root = NULL;
+				return  newNode;
+			}
+
+
+		}
+		return root;
+	}
 
 };
 

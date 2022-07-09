@@ -106,8 +106,11 @@ void MyWin32MFCWindows::OnPaint()
 	 AfxMessageBox(a, MB_OK);
 	 */
 
-	 TreeNode<int>* ret = root->insertBSTNode(root, 8, &dc);
-	 root->PreOrder( root, &dc);
+	// TreeNode<int>* ret = root->insertBSTNode(root, 8, &dc);
+	// root->PreOrder( root, &dc);
+
+	 TreeNode<int>* ret = root->deleteBSTNode(root, 1, &dc);
+	 root->PreOrder(root, &dc);
 }
 
 
