@@ -186,17 +186,17 @@ public:
 		if (root != NULL && (root->value < p))
 		{
 			TreeNode* right = insertBSTNode(root->right, p, pDC); //在这里返回节点9，7，6，4
-			root->right = right;
+			root->setRight(right);        //从下往上返回，这个例题中,重复设置right节点,无影响
 		}
 		else 	if (root != NULL && (root->value > p))
 		{
 			TreeNode* left = insertBSTNode(root->left, p, pDC); //在这里返回新节点8
-			root->left = left;
+			root->setLeft(left); //从下往上返回,关联8 这个例题中,设置9的节点8，因为8在9的左节点
 		}
 		
 		
-		print(pDC, root);
-		return root;
+		//print(pDC, root);
+		return root;   //从下往上返回9 7 6 4
 	}
 
 

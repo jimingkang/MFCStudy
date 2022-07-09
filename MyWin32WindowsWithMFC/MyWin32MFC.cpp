@@ -107,6 +107,7 @@ void MyWin32MFCWindows::OnPaint()
 	 */
 
 	 TreeNode<int>* ret = root->insertBSTNode(root, 8, &dc);
+	 root->PreOrder( root, &dc);
 }
 
 
