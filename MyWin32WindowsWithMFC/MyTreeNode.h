@@ -118,7 +118,7 @@ public:
 		
 
 	}
-	//method 2
+	// btstoGst method 2
 	TreeNode* btstoGst2(TreeNode* root) {
 		if (root == NULL)
 			return NULL;
@@ -140,7 +140,7 @@ public:
 
 	}
 
-	//method 3 标准答案 //https://juejin.cn/post/6931998186513334286  538
+	// btstoGst method 3 标准答案 //https://juejin.cn/post/6931998186513334286  538
 	TreeNode* btstoGst3(TreeNode* root, CPaintDC* pDC) {
 		static int preval = 0;
 		if (root == NULL)
@@ -160,6 +160,20 @@ public:
 		return root;
 
 
+	}
+	//leasecommonancestor
+	TreeNode* leastcommonancestor(TreeNode* root, int p, int q, CPaintDC* pDC) {
+		if (root == NULL)
+			return NULL;
+		if (root != NULL && (root->value == p|| root->value == q))
+			return root;
+		TreeNode* left = leastcommonancestor(root->left,  p,  q,pDC);
+		TreeNode* right = leastcommonancestor(root->right, p, q, pDC);
+		if (left != NULL && right != NULL)
+			return root;
+
+		print(pDC, root);
+		return left != NULL ? left : right;
 	}
 
 };

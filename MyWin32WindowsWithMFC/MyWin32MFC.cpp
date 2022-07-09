@@ -2,6 +2,7 @@
 #include "MyDlg.h"
 #include "MyTreeNode.h"
 #include <afxwin.h>
+#include <iostream>
 class MyWin32MFCWindows : public CFrameWnd
 {
 public:
@@ -96,8 +97,13 @@ void MyWin32MFCWindows::OnPaint()
 	//GetCursorPos(&curPos);
 	//root->PreOrder(root, &dc);
 	// 
- root->btstoGst3(root,&dc);
+ //root->btstoGst3(root,&dc);
+	 TreeNode<int>* ret= root->leastcommonancestor(root, 5, 8, &dc);
+	// std::cout << ret->value << std::endl;
 	//root->print(&dc);
+	 CString a;
+	 a.Format(_T("%d"), ret->value);
+	 AfxMessageBox(a, MB_OK);
 }
 
 
