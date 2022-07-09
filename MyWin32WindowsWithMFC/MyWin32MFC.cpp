@@ -59,7 +59,7 @@ MyWin32MFCWindows::MyWin32MFCWindows() {
 	 TreeNode<int>* rright = new TreeNode<int>(7);
 	 right->setLeft(rleft);
 	 right->setRight(rright);
-	 TreeNode<int>* right8 = new TreeNode<int>(8);
+	 TreeNode<int>* right8 = new TreeNode<int>(9);
 		 rright->setRight(right8);
 	 TreeNode<int>*left0 = new TreeNode<int>(0);
 	 TreeNode<int>* right2 = new TreeNode<int>(2);
@@ -96,14 +96,17 @@ void MyWin32MFCWindows::OnPaint()
 	//CPoint curPos;
 	//GetCursorPos(&curPos);
 	//root->PreOrder(root, &dc);
-	// 
- //root->btstoGst3(root,&dc);
-	 TreeNode<int>* ret= root->leastcommonancestor(root, 5, 8, &dc);
-	// std::cout << ret->value << std::endl;
-	//root->print(&dc);
+	
+
+	//root->btstoGst3(root,&dc);
+
+	 /*TreeNode<int>* ret= root->leastcommonancestor(root, 5, 8, &dc);
 	 CString a;
 	 a.Format(_T("%d"), ret->value);
 	 AfxMessageBox(a, MB_OK);
+	 */
+
+	 TreeNode<int>* ret = root->insertBSTNode(root, 8, &dc);
 }
 
 

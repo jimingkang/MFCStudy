@@ -185,12 +185,12 @@ public:
 		}
 		if (root != NULL && (root->value < p))
 		{
-			TreeNode* right = insertBSTNode(root->right, p, pDC); //在这里返回节点9，7，6，4
+			TreeNode* right = insertBSTNode(root->right, p, pDC);
 			root->right = right;
 		}
 		else 	if (root != NULL && (root->value > p))
 		{
-			TreeNode* left = insertBSTNode(root->left, p, pDC); //在这里返回新节点8
+			TreeNode* left = insertBSTNode(root->left, p, pDC);
 			root->left = left;
 		}
 		
