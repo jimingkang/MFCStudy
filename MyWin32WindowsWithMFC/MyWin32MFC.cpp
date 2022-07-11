@@ -3,22 +3,31 @@
 #include "MyTreeNode.h"
 #include <afxwin.h>
 #include <iostream>
+#include <vector>
 class MyWin32MFCWindows : public CFrameWnd
 {
 public:
 	TreeNode<int>* root;
+	std::vector<TreeNode<int>*> list;
+	TreeNode<int>* choosedNode;
 	CPaintDC *pdc;
 	MyDlg* dlg;
 	CButton* but;
 	MyWin32MFCWindows();
 	afx_msg void OnButton();
 	afx_msg void OnPaint();
+	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
+	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
+	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
 	DECLARE_MESSAGE_MAP()
 
 };
 BEGIN_MESSAGE_MAP(MyWin32MFCWindows, CFrameWnd)
 	ON_BN_CLICKED(1002, OnButton)
 	ON_WM_PAINT(OnPaint)
+	ON_WM_LBUTTONDOWN(OnLButtonDown)
+	ON_WM_LBUTTONUP(OnLButtonUp)
+	ON_WM_MOUSEMOVE(OnMouseMove)
 	END_MESSAGE_MAP()
 class MyWin32MFC : public CWinApp,CStatic
 {
@@ -68,6 +77,7 @@ MyWin32MFCWindows::MyWin32MFCWindows() {
 
 	 TreeNode<int>* right3 = new TreeNode<int>(3);
 	 right2->setRight(right3);
+	 root->GetList(root, list);
 	
 
 }
@@ -85,6 +95,62 @@ void MyWin32MFCWindows::OnButton() {
 	//root->PreOrder(root, pdc);
 
 }
+void MyWin32MFCWindows::OnLButtonDown(UINT flag,CPoint p) {
+
+	
+
+	std::vector<TreeNode<int>*>::iterator it;//声明一个迭代器，来访问vector容器，作用：遍历或者指向vector容器的元素 
+	for (it = list.begin(); it != list.end(); it++)
+	{
+		TreeNode<int>* node = (*it);
+		std::cout << *it << " ";
+		if (abs(node->x - p.x) < 5 && abs(node->y - p.y) < 5)
+		{
+			CString a;
+			a.Format(_T("%d,%d"), node->x, p.x);
+			//::AfxMessageBox(a);
+			choosedNode = node;
+		}
+
+
+	}
+
+
+
+}
+void MyWin32MFCWindows::OnLButtonUp(UINT flag, CPoint p) {
+
+
+	choosedNode->x = p.x;
+	choosedNode->y = p.y;
+	Invalidate();
+
+
+
+}
+void MyWin32MFCWindows::OnMouseMove(UINT flag, CPoint p) {
+
+	std::vector<TreeNode<int>*>::iterator it;//声明一个迭代器，来访问vector容器，作用：遍历或者指向vector容器的元素 
+	for (it = list.begin(); it != list.end(); it++)
+	{
+		TreeNode<int>* node = (*it);
+		std::cout << *it << " ";
+		if (abs(node->x - p.x) < 5 && abs(node->y - p.y) < 5)
+		{
+			CString a;
+			a.Format(_T("%d,%d"), node->x, p.x);
+			//::AfxMessageBox(a);
+			node->x = p.x;
+			node->y = p.y;
+		//  	node->resetTree(node);
+		}
+
+
+	}
+
+
+
+}
 
 void MyWin32MFCWindows::OnPaint()
 {
@@ -95,7 +161,22 @@ void MyWin32MFCWindows::OnPaint()
 //在鼠标处画图
 	//CPoint curPos;
 	//GetCursorPos(&curPos);
-	//root->PreOrder(root, &dc);
+	root->PreOrder(root, &dc);
+	/*CString a;
+	a.Format(_T("%d"), root->heightofTree(root));
+	AfxMessageBox(a, MB_OK);*/
+
+	/*CString a;
+	a.Format(_T("%d"), root->isValidBST(root)->result);
+	AfxMessageBox(a, MB_OK);*/
+	
+
+	CString a;
+	root->absMinTwoBSTNodes(root);
+	a.Format(_T("%d"), root->min);
+	AfxMessageBox(a, MB_OK);
+
+
 	
 
 	//root->btstoGst3(root,&dc);
@@ -109,8 +190,10 @@ void MyWin32MFCWindows::OnPaint()
 	// TreeNode<int>* ret = root->insertBSTNode(root, 8, &dc);
 	// root->PreOrder( root, &dc);
 
-	 TreeNode<int>* ret = root->deleteBSTNode(root, 1, &dc);
-	 root->PreOrder(root, &dc);
+	// TreeNode<int>* ret = root->deleteBSTNode(root, 1, &dc);
+	// root->PreOrder(root, &dc);
+
+	
 }
 
 

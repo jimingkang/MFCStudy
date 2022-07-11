@@ -1,17 +1,36 @@
-#pragma once
+ï»¿#pragma once
+#include <vector>
+//#include <math.h>
+#include <algorithm>
 template<class T>
 class TreeNode {
 public:
 	T value;
+	int result=1;
 	int x, y;
 	int spacex=30;
 	int spacey = 30;
 	TreeNode* left=NULL;
 	TreeNode* right=NULL;
+	std::vector<TreeNode*> list;
+	void GetList(TreeNode* root, std::vector<TreeNode*> &list) {
+		if (root != NULL)
+			list.push_back(root);
+		if (root != NULL && root->left != NULL)
+		
+			GetList(root->left, list);
+
+		if (root != NULL && root->right != NULL)
+			GetList(root->right, list);
+	}
+
 	void setLeft(TreeNode*& left) {
-		this->left = left;
-		this->left->x = this->x - spacex;
-		this->left->y = this->y + spacey;
+		if(left!=NULL){
+			this->left = left;
+			this->left->x = this->x - spacex;
+			this->left->y = this->y + spacey;
+		}
+		
 	}
 
 	void setRight(TreeNode*& right) {
@@ -21,12 +40,14 @@ public:
 	}
 	TreeNode(T val) {
 		this->value = val;
+		this->result = 1;
 	
 	}
 	TreeNode(T val,int x,int y) {
 		this->value = val;
 		this->x = x;
 		this->y = y;
+		this->result = 1;
 	}
 	TreeNode(T val, TreeNode*& left, TreeNode*& right) {
 		this->value = val;
@@ -37,6 +58,7 @@ public:
 
 		this->right->x = this->x + spacex;
 		this->right->y = this->y + spacey;
+		this->result = 1;
 
 	}
 	TreeNode(T val,TreeNode* & left, TreeNode*& right, int x, int y) {
@@ -52,6 +74,7 @@ public:
 
 		this->right->x = this->x + spacex;
 		this->right->y = this->y + spacey;
+		this->result = 1;
 	
 	}
 	void print(CPaintDC* pDC, TreeNode* root) {
@@ -66,7 +89,7 @@ public:
 
 		CString a;
 		a.Format(_T("%d"), root->value);
-		//»­Ô²
+		//ç”»åœ†
 	//	CPoint point1(x, y);
 	//	CPoint point2(x+5,y+5);
 		//pDC->Ellipse(CRect(point1, point2));
@@ -76,18 +99,40 @@ public:
 		if (root != NULL && root->left != NULL) {
 			CPoint startp(root->x, root->y);
 			pDC->MoveTo(startp);
-			CPoint endp(root->x - spacex, root->y + spacey);
+			CPoint endp(root->left->x, root->left->y);
 			pDC->LineTo(endp);
 		}
 		if (root != NULL && root->right != NULL) {
 		CPoint startp2(root->x, root->y);
 		pDC->MoveTo(startp2);
-		CPoint endp2(root->x + spacex, root->y + spacey);
+		CPoint endp2(root->right->x, root->right->y);
 		pDC->LineTo(endp2);
 	}
 		
-		Sleep(1000);
+		// Sleep(100);
 	}
+
+	TreeNode<int>* resetTree(TreeNode<int>* & root) {
+		/*if (root != NULL)ï½›
+			setLeft(root->left);
+			setRight(root->right); 
+		ï½*/
+
+			if (root != NULL && root->left != NULL)
+			{
+				TreeNode<int>* left = resetTree(root->left);
+				setLeft(left);
+			}
+
+		if (root != NULL && root->right != NULL)
+		{
+			TreeNode<int>* right = resetTree(root->right);
+			setRight(right);
+		}
+		if(root!=NULL)
+		return root;
+	}
+
 	void PreOrder(TreeNode* root, CPaintDC* pDC) {
 		print(pDC, root);
 		if(root!=NULL&&root->left!=NULL)
@@ -140,7 +185,7 @@ public:
 
 	}
 
-	// btstoGst method 3 ±ê×¼´ð°¸ //https://juejin.cn/post/6931998186513334286  538
+	// btstoGst method 3 æ ‡å‡†ç­”æ¡ˆ //https://juejin.cn/post/6931998186513334286  538
 	TreeNode* btstoGst3(TreeNode* root, CPaintDC* pDC) {
 		static int preval = 0;
 		if (root == NULL)
@@ -185,16 +230,16 @@ public:
 		}
 		if (root != NULL && (root->value < p))
 		{
-			TreeNode* right = insertBSTNode(root->right, p, pDC); //ÔÚÕâÀï·µ»Ø½Úµã9£¬7£¬6£¬4
-			root->setRight(right);        //´ÓÏÂÍùÉÏ·µ»Ø£¬Õâ¸öÀýÌâÖÐ,ÖØ¸´ÉèÖÃright½Úµã,ÎÞÓ°Ïì
+			TreeNode* right = insertBSTNode(root->right, p, pDC); //åœ¨è¿™é‡Œè¿”å›žèŠ‚ç‚¹9ï¼Œ7ï¼Œ6ï¼Œ4
+			root->setRight(right);        //ä»Žä¸‹å¾€ä¸Šè¿”å›žï¼Œè¿™ä¸ªä¾‹é¢˜ä¸­,é‡å¤è®¾ç½®rightèŠ‚ç‚¹,æ— å½±å“
 		}
 		else 	if (root != NULL && (root->value > p))
 		{
-			TreeNode* left = insertBSTNode(root->left, p, pDC); //ÔÚÕâÀï·µ»ØÐÂ½Úµã8
-			root->setLeft(left); //´ÓÏÂÍùÉÏ·µ»Ø,¹ØÁª8 Õâ¸öÀýÌâÖÐ,ÉèÖÃ9µÄ½Úµã8£¬ÒòÎª8ÔÚ9µÄ×ó½Úµã
+			TreeNode* left = insertBSTNode(root->left, p, pDC); //åœ¨è¿™é‡Œè¿”å›žæ–°èŠ‚ç‚¹8
+			root->setLeft(left); //ä»Žä¸‹å¾€ä¸Šè¿”å›ž,å…³è”8 è¿™ä¸ªä¾‹é¢˜ä¸­,è®¾ç½®9çš„èŠ‚ç‚¹8ï¼Œå› ä¸º8åœ¨9çš„å·¦èŠ‚ç‚¹
 		}
 	
-		return root;   //´ÓÏÂÍùÉÏ·µ»Ø9 7 6 4
+		return root;   //ä»Žä¸‹å¾€ä¸Šè¿”å›ž9 7 6 4
 	}
 	//leetcode450 deleteBSTNode
 	TreeNode* deleteBSTNode(TreeNode* root, int p, CPaintDC* pDC) {
@@ -204,25 +249,25 @@ public:
 		if (root != NULL && (root->value < p))
 		{
 			TreeNode* right = deleteBSTNode(root->right, p, pDC); //
-			root->setRight(right);        //´ÓÏÂÍùÉÏ·µ»Ø£¬,ÖØÐÂÉèÖÃright½Úµã
+			root->setRight(right);        //ä»Žä¸‹å¾€ä¸Šè¿”å›žï¼Œ,é‡æ–°è®¾ç½®rightèŠ‚ç‚¹
 		}
 		else 	if (root != NULL && (root->value > p))
 		{
 			TreeNode* left = deleteBSTNode(root->left, p, pDC); //
-			root->setLeft(left); //´ÓÏÂÍùÉÏ·µ»Ø,¹ØÁª0 
+			root->setLeft(left); //ä»Žä¸‹å¾€ä¸Šè¿”å›ž,å…³è”0 
 		}
 		else	if (root != NULL && (root->value == p))
 		{
-			TreeNode* refreshNode = resetSubNode(root); //ÔÚÕâÀï·µ»ØÐÂ½Úµã0
+			TreeNode* refreshNode = resetSubNode(root); //åœ¨è¿™é‡Œè¿”å›žæ–°èŠ‚ç‚¹0
 			return refreshNode;
 		}
-
+		 
 
 		//print(pDC, root);
-		return root;   //´ÓÏÂÍùÉÏ·µ»Ø9 7 6 4
+		return root;   //ä»Žä¸‹å¾€ä¸Šè¿”å›ž9 7 6 4
 	}
 
-	//Ç°ÖÃ½Úµã0
+	//å‰ç½®èŠ‚ç‚¹0
 	TreeNode* resetSubNode(TreeNode* root) {
 		if (root->right == NULL && root->left == NULL)
 			return NULL;
@@ -246,7 +291,7 @@ public:
 				{
 					node = node->right;
 				}
-				//Ç°ÖÃ½ÚµãµÄ×ó½Úµã²»Îª¿Õ£¬
+				//å‰ç½®èŠ‚ç‚¹çš„å·¦èŠ‚ç‚¹ä¸ä¸ºç©ºï¼Œ
 				if (node->left != NULL) {
 					preNode->right = node->left;
 					node->left = root->left;
@@ -261,7 +306,7 @@ public:
 				}
 			}
 			else {
-				//Èç¹ûÇ°ÖÃ½Úµã¾ÍÊÇ¸Ã½ÚµãµÄ×ó½Úµã£¬Ö±½ÓÓÃ¸Ã×ó½Úµã×÷Îª¸ù½Úµã
+				//å¦‚æžœå‰ç½®èŠ‚ç‚¹å°±æ˜¯è¯¥èŠ‚ç‚¹çš„å·¦èŠ‚ç‚¹ï¼Œç›´æŽ¥ç”¨è¯¥å·¦èŠ‚ç‚¹ä½œä¸ºæ ¹èŠ‚ç‚¹
 				root->left->right = root->right;
 				TreeNode<int>* newNode = root->left;
 				root = NULL;
@@ -273,7 +318,7 @@ public:
 		return root;
 	}
 
-	//Ç°ÖÃ½Úµã2
+	//å‰ç½®èŠ‚ç‚¹2
 	TreeNode* resetSubNode2(TreeNode* root) {
 		if (root->right == NULL && root->left == NULL)
 			return NULL;
@@ -298,7 +343,7 @@ public:
 					preNode = node;
 					node = node->right;
 				}
-				//Ç°ÖÃ½ÚµãµÄ×ó½Úµã²»Îª¿Õ£¬
+				//å‰ç½®èŠ‚ç‚¹çš„å·¦èŠ‚ç‚¹ä¸ä¸ºç©ºï¼Œ
 				if (node->left != NULL) {
 					preNode->right = node->left;
 					node->left = root->left;
@@ -313,7 +358,7 @@ public:
 				}
 			}
 			else {
-				//Èç¹ûÇ°ÖÃ½Úµã¾ÍÊÇ¸Ã½ÚµãµÄ×ó½Úµã£¬Ö±½ÓÓÃ¸Ã×ó½Úµã×÷Îª¸ù½Úµã
+				//å¦‚æžœå‰ç½®èŠ‚ç‚¹å°±æ˜¯è¯¥èŠ‚ç‚¹çš„å·¦èŠ‚ç‚¹ï¼Œç›´æŽ¥ç”¨è¯¥å·¦èŠ‚ç‚¹ä½œä¸ºæ ¹èŠ‚ç‚¹
 				root->left->right = root->right;
 				TreeNode<int>* newNode = root->left;
 				root = NULL;
@@ -323,6 +368,65 @@ public:
 
 		}
 		return root;
+	}
+
+	//height of tree
+	int heightofTree(TreeNode* root) {
+		if (root == NULL) return 0;
+		return max(heightofTree(root->left), heightofTree(root->right)) + 1;
+	}
+
+	//leetcode 98
+	TreeNode* isValidBST(TreeNode* root) {
+		
+		if (root == NULL)
+		{
+			return root;
+		}
+			
+		
+		TreeNode*  left=isValidBST(root->left);
+		TreeNode* right = isValidBST(root->right);
+		if ((left == NULL || (left != NULL && left->value < root->value)) && (right == NULL || (right != NULL && root->value < right->value)))
+		{
+			if (left == NULL && right == NULL)
+				root->result = 1;
+			else if (left == NULL && right != NULL)
+				root->result = right->result;
+			else if (left != NULL && right == NULL)
+				root->result = left->result;
+			else  if (left != NULL && right != NULL)
+				root->result =left->result&& right->result;
+		}
+		else
+			root->result = 0;
+
+		return root;
+	
+		
+	}
+	 int pre=10000;
+	 int min = 10000;
+	//ï¬Leecode 530. äºŒå‰æœç´¢æ ‘(éžè´Ÿ)çš„æœ€å°ç»å¯¹å·®
+	void absMinTwoBSTNodes(TreeNode* root) {
+	
+		if (root == NULL)
+		{
+			return ;
+		}
+		if (root != NULL && root->left != NULL)
+
+		absMinTwoBSTNodes(root->left);
+	
+		min = min(min, abs(root->value - pre));
+		pre = root->value;
+		if (root != NULL && root->left != NULL)
+	    absMinTwoBSTNodes(root->right);
+		
+
+		;
+
+
 	}
 
 };
