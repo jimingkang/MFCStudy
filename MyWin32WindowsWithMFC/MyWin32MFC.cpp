@@ -4,6 +4,7 @@
 #include <afxwin.h>
 #include <iostream>
 #include <vector>
+#include <algorithm>
 class MyWin32MFCWindows : public CFrameWnd
 {
 public:
@@ -69,9 +70,9 @@ MyWin32MFCWindows::MyWin32MFCWindows() {
 	 right->setLeft(rleft);
 	 right->setRight(rright);
 	 TreeNode<int>* right8 = new TreeNode<int>(9);
-		 rright->setRight(right8);
+	 rright->setRight(right8);
 	 TreeNode<int>*left0 = new TreeNode<int>(0);
-	 TreeNode<int>* right2 = new TreeNode<int>(2);
+	 TreeNode<int>* right2 = new TreeNode<int>(3);
 	 left->setLeft(left0);
 	 left->setRight(right2);
 
@@ -171,13 +172,12 @@ void MyWin32MFCWindows::OnPaint()
 	AfxMessageBox(a, MB_OK);*/
 	
 
-	CString a;
-	root->absMaxTwoBSTNodes(root);
-	a.Format(_T("%d"), root->max);
+	/*CString a;
+	root->absMinTwoBSTNodes(root);
+	a.Format(_T("%d"), root->min);
 	AfxMessageBox(a, MB_OK);
+	*/
 
-
-	
 
 	//root->btstoGst3(root,&dc);
 
@@ -192,6 +192,11 @@ void MyWin32MFCWindows::OnPaint()
 
 	// TreeNode<int>* ret = root->deleteBSTNode(root, 1, &dc);
 	// root->PreOrder(root, &dc);
+
+		CString a;
+		root->findFrequentNode(root);
+	a.Format(_T("%d"),max(root->count,root->count2));
+	AfxMessageBox(a, MB_OK);
 
 	
 }

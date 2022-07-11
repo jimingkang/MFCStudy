@@ -405,23 +405,23 @@ public:
 	
 		
 	}
-	 int pre=10000;
-	 int min = 10000;
+	int pre = -1;
+	int min = 10000;
 	//Leecode 530. 二叉搜索树(非负)的最小绝对差
 	void absMinTwoBSTNodes(TreeNode* root) {
-	
+
 		if (root == NULL)
 		{
-			return ;
+			return;
 		}
 		if (root != NULL && root->left != NULL)
 
-		absMinTwoBSTNodes(root->left);
-	
+			absMinTwoBSTNodes(root->left);
+		if(pre!=-1)
 		min = min(min, abs(root->value - pre));
 		pre = root->value;
 		if (root != NULL && root->right != NULL)
-	    absMinTwoBSTNodes(root->right);
+			absMinTwoBSTNodes(root->right);
 
 	}
 
@@ -445,6 +445,33 @@ public:
 
 
 	}
+	int ppre = -1;
+	int count = 1;
+	int count2 = 1;
+	//leetcode 501 findFrequentNode
+	void findFrequentNode(TreeNode* root) {
+
+		if (root == NULL)
+		{
+			return;
+		}
+		if (root != NULL && root->left != NULL)
+			findFrequentNode(root->left);
+		if (root->value == ppre&& count<= count2)
+		{
+			count++;
+			count2 = count;
+		}
+		else {
+			count = 1;
+
+		}
+		ppre = root->value;
+		if (root != NULL && root->right != NULL)
+			findFrequentNode(root->right);
+	
+	}
+
 
 };
 
