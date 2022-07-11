@@ -7,7 +7,7 @@ class TreeNode {
 public:
 	T value;
 	int result=1;
-	int x, y;
+	int x=700, y=100;
 	int spacex=30;
 	int spacey = 30;
 	TreeNode* left=NULL;
@@ -38,7 +38,7 @@ public:
 		this->right->x = this->x + spacex;
 		this->right->y = this->y + spacey;
 	}
-	TreeNode(T val) {
+	TreeNode(int val) {
 		this->value = val;
 		this->result = 1;
 	
@@ -49,7 +49,7 @@ public:
 		this->y = y;
 		this->result = 1;
 	}
-	TreeNode(T val, TreeNode*& left, TreeNode*& right) {
+	TreeNode(int val, TreeNode*& left, TreeNode*& right) {
 		this->value = val;
 		this->left = left;
 		this->right = right;
@@ -471,9 +471,36 @@ public:
 			findFrequentNode(root->right);
 	
 	}
+	int maxValueIndex(int* nums, int left, int right) {
+		int maxValueIndex = left;
+		for (int i = left; i <= right; i++) {
+			if (nums[i] > nums[maxValueIndex]) {
+				maxValueIndex = i;
+			}
+		}
+		return maxValueIndex;
+	}
+	TreeNode* maxBigTree(int* nums, int l, int r) {
+		if (r < l) return NULL;
+		int maxIndex = maxValueIndex(nums, l, r);
+		int value = nums[maxIndex];
+		TreeNode* root = new TreeNode(value);
+		TreeNode<int>* left = maxBigTree(nums, l, maxIndex - 1);
+		if(left!=NULL)
+		root->setLeft(left);
+		TreeNode<int>* right = maxBigTree(nums, maxIndex + 1,r);
+		if (right != NULL)root->setRight(right);
+		return root;
+
+	}
+	
+
+
+	
 
 
 };
+
 
 //template<class T>
 //inline void TreeNode::print(CPaintDC* pDC) {

@@ -162,7 +162,7 @@ void MyWin32MFCWindows::OnPaint()
 //在鼠标处画图
 	//CPoint curPos;
 	//GetCursorPos(&curPos);
-	root->PreOrder(root, &dc);
+	//root->PreOrder(root, &dc);
 	/*CString a;
 	a.Format(_T("%d"), root->heightofTree(root));
 	AfxMessageBox(a, MB_OK);*/
@@ -193,12 +193,16 @@ void MyWin32MFCWindows::OnPaint()
 	// TreeNode<int>* ret = root->deleteBSTNode(root, 1, &dc);
 	// root->PreOrder(root, &dc);
 
-		CString a;
+	
+	/*	CString a;
 		root->findFrequentNode(root);
 	a.Format(_T("%d"),max(root->count,root->count2));
 	AfxMessageBox(a, MB_OK);
+	*/
+	 int arr[8] = { 3,2,1,6,0,5 };
+	TreeNode<int> *newroot=root->maxBigTree(arr, 0, 7);
 
-	
+	newroot->PreOrder(newroot,&dc);
 }
 
 
