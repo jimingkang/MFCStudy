@@ -172,8 +172,8 @@ void MyWin32MFCWindows::OnPaint()
 	
 
 	CString a;
-	root->absMinTwoBSTNodes(root);
-	a.Format(_T("%d"), root->min);
+	root->absMaxTwoBSTNodes(root);
+	a.Format(_T("%d"), root->max);
 	AfxMessageBox(a, MB_OK);
 
 

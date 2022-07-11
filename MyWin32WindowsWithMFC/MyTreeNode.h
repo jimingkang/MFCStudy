@@ -420,11 +420,28 @@ public:
 	
 		min = min(min, abs(root->value - pre));
 		pre = root->value;
-		if (root != NULL && root->left != NULL)
+		if (root != NULL && root->right != NULL)
 	    absMinTwoBSTNodes(root->right);
-		
 
-		;
+	}
+
+	int max_pre = 0;
+	int max = 0;
+	//Leecode  二叉搜索树(非负)的相邻最大绝对差
+	void absMaxTwoBSTNodes(TreeNode* root) {
+
+		if (root == NULL)
+		{
+			return;
+		}
+		if (root != NULL && root->left != NULL)
+
+			absMaxTwoBSTNodes(root->left);
+
+		max = max(max, abs(root->value - max_pre));
+		max_pre = root->value;
+		if (root != NULL && root->right != NULL)
+			absMaxTwoBSTNodes(root->right);
 
 
 	}
