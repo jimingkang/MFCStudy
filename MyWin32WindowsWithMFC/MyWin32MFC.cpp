@@ -2,6 +2,7 @@
 #include "MyDlg.h"
 #include "MyTreeNode.h"
 #include <afxwin.h>
+#include "numofisland.h"
 class MyWin32MFCWindows : public CFrameWnd
 {
 public:
@@ -70,7 +71,43 @@ void MyWin32MFCWindows::OnPaint()
 	//CPoint curPos;
 	//GetCursorPos(&curPos);
 
-	root->print(&dc);
+	//root->print(&dc);
+	/*int M[][COL] = {{ 1, 1, 0, 0, 0 },
+					{ 0, 1, 0, 0, 1 },
+					{ 1, 0, 0, 1, 1 },
+					{ 0, 0, 0, 0, 0 },
+					{ 1, 0, 1, 0, 1 } };*/
+	int M[][COL] = { { 0, 1, 0, 0 },
+					 { 0, 1, 0, 0 },
+					 { 0, 0, 0, 1 },
+					 { 1, 0, 0, 0 } };
+	CString a;
+
+
+	CRect		rect(100,120,150,200);
+
+	// current bounding rectangle of entire client area...
+
+	for (size_t i = 0; i < ROW; i++)
+	{
+		for (size_t j = 0; j < COL; j++)
+		{/*
+			a.Format(_T("%d"), M[i][j]);
+			rect.top = 200 + i * 20 - 20;
+			rect.left = 100 + j * 20 - 20;
+
+			rect.bottom = 200 + i * 20;
+			rect.right = 100 + j * 20;
+			dc.DrawText(a, -1, &rect, DT_SINGLELINE | DT_CENTER | DT_VCENTER);*/
+
+		}
+
+	}
+	a.Format(_T("%d"), countIslands(M, &dc,&rect));
+	::AfxMessageBox(a);
+
+	
+	
 }
 
 

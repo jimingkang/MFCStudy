@@ -131,6 +131,7 @@
     <ClInclude Include="MyDlg.h" />
     <ClInclude Include="MyTreeNode.h" />
     <ClInclude Include="MyWin32MFC.h" />
+    <ClInclude Include="numofisland.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
