@@ -103,8 +103,11 @@ void MyWin32MFCWindows::OnPaint()
 		}
 
 	}
-	a.Format(_T("%d"), countIslands(M, &dc,&rect));
-	::AfxMessageBox(a);
+//	a.Format(_T("%d"), countIslands(M, &dc,&rect));
+//	::AfxMessageBox(a);
+
+     a.Format(_T("%d"), maxAreaOfIslands(M, &dc,&rect));
+     ::AfxMessageBox(a);
 
 	
 	

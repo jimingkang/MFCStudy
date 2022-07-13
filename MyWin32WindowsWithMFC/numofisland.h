@@ -2,6 +2,7 @@
 // C++ Program to count islands in boolean 2D matrix
 //#include <bits/stdc++.h>
 #include <iostream>
+#include <algorithm>
 
 using namespace std;
 
@@ -24,7 +25,7 @@ int isSafe(int M[][COL], int row, int col,
 // 2D boolean matrix. It only considers
 // the 8 neighbours as adjacent vertices
 void DFS(int M[][COL], int row, int col,
-    bool visited[][COL],CPaintDC* pDc,CRect * rect)
+    bool visited[][COL],CPaintDC* pDc,CRect * rect,int& max)
 {
     // These arrays are used to get
     // row and column numbers of 8
@@ -50,13 +51,14 @@ void DFS(int M[][COL], int row, int col,
         pDc->DrawText(a, -1, rect, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
 
         // pDc->SetTextColor(RGB(0, 255, 0));
-
-        pDc->DrawText(a, -1, rect, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
-        ::Sleep(1000);
+        //pDc->DrawText(a, -1, rect, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
+        //::Sleep(1000);
+       
         if (isSafe(M, row + rowNbr[k], col + colNbr[k], visited))
         {
-           
-            DFS(M, row + rowNbr[k], col + colNbr[k], visited, pDc, rect);
+     
+            max++;
+            DFS(M, row + rowNbr[k], col + colNbr[k], visited, pDc, rect,max);
         }
     }
 }
@@ -75,6 +77,8 @@ int countIslands(int M[][COL], CPaintDC *pDc,CRect *rect)
     // traverse through the all cells of
     // given matrix
     int count = 0;
+     int max = 0;
+    int globalmax = 0;
     for (int i = 0; i < ROW; ++i)
         for (int j = 0; j < COL; ++j)
 
@@ -95,7 +99,7 @@ int countIslands(int M[][COL], CPaintDC *pDc,CRect *rect)
                 pDc->SetTextColor(RGB(0, 0, 0));
 
                 pDc->DrawText(a, -1, rect, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
-                DFS(M, i, j, visited, pDc, rect);
+                DFS(M, i, j, visited, pDc, rect,max);
               
                 // and increment island count
                 ++count;
@@ -104,6 +108,48 @@ int countIslands(int M[][COL], CPaintDC *pDc,CRect *rect)
             }
 
     return count;
+}
+
+int maxAreaOfIslands(int M[][COL], CPaintDC* pDc, CRect* rect)
+{
+    // Make a bool array to mark visited cells.
+    // Initially all cells are unvisited
+    bool visited[ROW][COL];
+    memset(visited, 0, sizeof(visited));
+    int globalmax=0;
+    int max=0;
+    // Initialize count as 0 and
+    // traverse through the all cells of
+    // given matrix
+    int count = 0;
+    for (int i = 0; i < ROW; ++i)
+        for (int j = 0; j < COL; ++j)
+
+            // If a cell with value 1 is not
+            if (M[i][j] && !visited[i][j]) {
+                // visited yet, then new island found
+                // Visit all cells in this island.
+                CString a;
+                a.Format(_T("%d"), M[i][j]);
+                rect->top = 200 + (i)*space - space;
+                rect->left = 100 + (j)*space - space;
+
+                rect->bottom = 200 + (i)*space;
+                rect->right = 100 + (j)*space;
+                pDc->SetTextColor(RGB(255, 255, 0));
+                pDc->DrawText(a, -1, rect, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
+                ::Sleep(1000);
+                pDc->SetTextColor(RGB(0, 0, 0));
+
+                pDc->DrawText(a, -1, rect, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
+                DFS(M, i, j, visited, pDc, rect, max);
+                globalmax = max(globalmax, max);
+                max = 0;
+
+
+            }
+
+    return globalmax;
 }
 
 // Driver code
