@@ -77,8 +77,8 @@ void MyWin32MFCWindows::OnPaint()
 					{ 1, 0, 0, 1, 1 },
 					{ 0, 0, 0, 0, 0 },
 					{ 1, 0, 1, 0, 1 } };*/
-	int M[][COL] = { { 0, 1, 0, 0 },
-					 { 0, 1, 0, 0 },
+	int M[][COL] = { { 0, 0, 0, 0 },
+					 { 0, 1, 1, 0 },
 					 { 0, 0, 0, 1 },
 					 { 1, 0, 0, 0 } };
 	CString a;
@@ -106,8 +106,11 @@ void MyWin32MFCWindows::OnPaint()
 //	a.Format(_T("%d"), countIslands(M, &dc,&rect));
 //	::AfxMessageBox(a);
 
-     a.Format(_T("%d"), maxAreaOfIslands(M, &dc,&rect));
-     ::AfxMessageBox(a);
+  /*   a.Format(_T("%d"), maxAreaOfIslands(M, &dc,&rect));
+     ::AfxMessageBox(a);*/
+
+	a.Format(_T("%d"), numberOfIsolatedIslands(M, &dc, &rect));
+	::AfxMessageBox(a);
 
 	
 	
